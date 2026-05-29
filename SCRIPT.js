@@ -99,19 +99,19 @@ onValue(disRef, (snapshot) => {
 });
 
 
-function renderData(data){
+function renderData(data) {
 
-    if(!data){
+    if (!data) {
 
         document.getElementById("boxDis")
-        .innerHTML = "ไม่มีข้อมูล";
+            .innerHTML = "ไม่มีข้อมูล";
 
         return;
 
     }
 
     const arr =
-    Object.entries(data);
+        Object.entries(data);
 
     let html = "";
 
@@ -122,8 +122,11 @@ function renderData(data){
         html += `
 
             <div class="card">
-
+                
                 <div class="word">
+                <button onclick='speak(${JSON.stringify(value.word)})'>
+                    🔊
+                </button>
                     ${value.word}
                 </div>
 
@@ -138,7 +141,7 @@ function renderData(data){
                     <button
                         class="deleteBtn"
                         style="display:${showDelete ? "block" : "none"}"
-                        onclick="deleteData('${item[0]}','${value.word}')">
+                        onclick="deleteData('${item[0]}','${value.word}','${value.var}')">
 
                         ลบ
 
@@ -152,16 +155,27 @@ function renderData(data){
     });
 
     document.getElementById("boxDis")
-    .innerHTML = html;
+        .innerHTML = html;
 
 }
 
-window.deleteData = function(id,word){
+window.speak = function(text) {
+
+    const speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    window.speechSynthesis.speak(speech);
+
+}
+
+
+window.deleteData = function (id, word, va) {
 
     const check =
-    confirm(`ต้องการลบ '${word}' หรือไม่?`);
+        confirm(`ต้องการลบ "${word}" : "${va}" หรือไม่?`);
 
-    if(check){
+    if (check) {
 
         remove(ref(db, "dis/" + id));
 
@@ -170,70 +184,70 @@ window.deleteData = function(id,word){
 }
 
 document
-.getElementById("randomSort")
-.addEventListener("click", () => {
+    .getElementById("randomSort")
+    .addEventListener("click", () => {
 
-    const arr =
-    Object.entries(wordsData);
+        const arr =
+            Object.entries(wordsData);
 
-    arr.sort(() => Math.random() - 0.5);
+        arr.sort(() => Math.random() - 0.5);
 
-    const shuffled =
-    Object.fromEntries(arr);
+        const shuffled =
+            Object.fromEntries(arr);
 
-    renderData(shuffled);
-
-});
-
-
-document
-.getElementById("toggleDelete")
-.addEventListener("click", () => {
-
-    const means =
-    document.querySelectorAll(".deleteBtn");
-
-    showDelete = !showDelete;
-
-    means.forEach((item) => {
-
-        if(showDelete){
-
-            item.style.display = "block";
-
-        }
-        else{
-
-            item.style.display = "none";
-
-        }
+        renderData(shuffled);
 
     });
 
-});
 
 document
-.getElementById("toggleMean")
-.addEventListener("click", () => {
+    .getElementById("toggleDelete")
+    .addEventListener("click", () => {
 
-    const means =
-    document.querySelectorAll(".mean");
+        const means =
+            document.querySelectorAll(".deleteBtn");
 
-    showMean = !showMean;
+        showDelete = !showDelete;
 
-    means.forEach((item) => {
+        means.forEach((item) => {
 
-        if(showMean){
+            if (showDelete) {
 
-            item.style.display = "block";
+                item.style.display = "block";
 
-        }
-        else{
+            }
+            else {
 
-            item.style.display = "none";
+                item.style.display = "none";
 
-        }
+            }
+
+        });
 
     });
 
-});
+document
+    .getElementById("toggleMean")
+    .addEventListener("click", () => {
+
+        const means =
+            document.querySelectorAll(".mean");
+
+        showMean = !showMean;
+
+        means.forEach((item) => {
+
+            if (showMean) {
+
+                item.style.display = "block";
+
+            }
+            else {
+
+                item.style.display = "none";
+
+            }
+
+        });
+
+    });
