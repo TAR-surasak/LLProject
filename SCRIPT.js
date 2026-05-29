@@ -164,6 +164,7 @@ window.speak = function(text) {
     const speech = new SpeechSynthesisUtterance(text);
 
     speech.lang = "en-US";
+    speech.rate = 0.75;
 
     window.speechSynthesis.speak(speech);
 
