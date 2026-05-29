@@ -274,6 +274,42 @@ body{
 
 }
 
+.speakBtn{
+
+    border: none;
+
+    background: #4CAF50;
+
+    color: white;
+
+    width: 35px;
+
+    height: 35px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: 0.2s;
+
+}
+
+.speakBtn:hover{
+
+    transform: scale(1.1);
+
+    background: #45a049;
+
+}
+
+.speakBtn:active{
+
+    transform: scale(0.95);
+
+}
+
 /* =======================
    MOBILE FIX
 ======================= */
@@ -315,7 +351,7 @@ body{
 
     }
 
-
+    
 
 
 }
