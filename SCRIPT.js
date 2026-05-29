@@ -124,7 +124,7 @@ function renderData(data) {
             <div class="card">
                 
                 <div class="word">
-                <button onclick='speak(${JSON.stringify(value.word)})'>
+                <button class="speakBtn" onclick='speak(${JSON.stringify(value.word)})'>
                     🔊
                 </button>
                     ${value.word}
